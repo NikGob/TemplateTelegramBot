@@ -35,7 +35,6 @@ public class HostTelegram
 
     private async Task UpdateHandler(ITelegramBotClient client, Update update, CancellationToken token)
     {
-        Console.WriteLine($"New message: {update.Message?.Text ?? "[no text]"}");
         OnMessage?.Invoke(client, update);
         await Task.CompletedTask;
     }

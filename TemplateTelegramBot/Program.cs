@@ -26,8 +26,15 @@ namespace TemplateTelegramBot
 
         static string botToken;
 
-        private static async Task Main(string[] args)
+       
+
+
+
+
+        private static async Task Main(string[] args, ITelegramBotClient client)
         {
+             
+
             configuration = new ConfigurationBuilder()
 
                 .AddJsonFile("appsettings.json", optional: true)
@@ -51,9 +58,27 @@ namespace TemplateTelegramBot
                          services.AddHostedService<Worker>();
                      })
                      .RunConsoleAsync();
+
+
         }
         static async void OnMessage(ITelegramBotClient client, Update update)
         {
+            switch (update.Type)
+            {
+                case UpdateType.Message:
+                    switch (update.Message?.Text)
+                    {
+                        case var s when string.Equals(s, "/start", StringComparison.OrdinalIgnoreCase):
+
+                        break;
+                    }
+                break;            
+            }
+
+
+
+
+
 
         }
 
