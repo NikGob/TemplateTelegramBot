@@ -29,5 +29,11 @@ public class HostTelegram
     {
         OnMessage?.Invoke(client, update);
         await Task.CompletedTask;
+
+        var username = update.Message?.From?.Username != null ? $"@{update.Message.From.Username}" : update.Message?.From?.FirstName;
+        var userId = update.Message?.From?.Id;
+        var messageText = update.Message?.Text ?? "[no text]";
+
+        Console.WriteLine($"{username} ({userId}) sent message: {messageText}");
     }
 }
