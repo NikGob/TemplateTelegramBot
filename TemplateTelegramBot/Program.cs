@@ -1,18 +1,9 @@
-﻿using System.Text.RegularExpressions;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Requests;
-using System.Diagnostics;
-using Telegram.Bot.Types.Payments;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
-using TemplateTelegramBot;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualBasic;
 
 namespace TemplateTelegramBot
 {
@@ -26,19 +17,11 @@ namespace TemplateTelegramBot
 
         static string botToken;
 
-
-
-
-
-
         private static async Task Main(string[] args)
         {
-
-
             configuration = new ConfigurationBuilder()
 
                 .AddJsonFile("appsettings.json", optional: true)
-
                 .Build();
 
             botToken = configuration.GetValue<string>("BotToken");
@@ -54,12 +37,9 @@ namespace TemplateTelegramBot
             await Host.CreateDefaultBuilder(args)
                      .ConfigureServices((hostContext, services) =>
                      {
-                         // Конфигурация зависимостей, если нужно
                          services.AddHostedService<Worker>();
                      })
                      .RunConsoleAsync();
-
-
         }
         static async void OnMessage(ITelegramBotClient client, Update update)
         {
@@ -69,35 +49,53 @@ namespace TemplateTelegramBot
 
             Console.WriteLine($"{username} ({userId}) sent message: {messageText}");
 
-
             switch (update.Type)
             {
                 case UpdateType.Message:
-                    switch (update.Message?.Text)
+                    if (update.Message?.Text != null)
                     {
-                        case var s when string.Equals(s, "", StringComparison.OrdinalIgnoreCase):
+                        switch (update.Message.Text)
+                        {
+                            case var s when string.Equals(s, "", StringComparison.OrdinalIgnoreCase):
+                               
+                                break;
 
-                            break;
-
-                        default:
-                            
-                            break;
-
+                            default:
+                               
+                                break;
+                        }
                     }
+                    break;
 
+                case UpdateType.EditedMessage:
+                 
+                    break;
 
+                case UpdateType.ChannelPost:
+                    
+                    break;
+
+                case UpdateType.EditedChannelPost:
+                    
+                    break;
+
+                case UpdateType.CallbackQuery:
+                   
+                    break;
+
+                case UpdateType.InlineQuery:
+                   
+                    break;
+
+                case UpdateType.ChosenInlineResult:
+                                
+                    break;
+
+                default:
+                  
                     break;
             }
-
-
-
-
-
-
         }
-
-
     }
-
 }
 

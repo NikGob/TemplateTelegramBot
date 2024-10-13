@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 
 public class HostTelegram
@@ -17,14 +12,11 @@ public class HostTelegram
         _adminID = adminID;
     }
 
-
-
     public async void Start()
     {
         _bot.StartReceiving(UpdateHandler, ErrorHandler);
         Console.WriteLine("Bot started.");
         await _bot.SendTextMessageAsync(_adminID, "Bot started.");
-
     }
 
     private async Task ErrorHandler(ITelegramBotClient client, Exception exception, CancellationToken token)

@@ -1,11 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TemplateTelegramBot;
-
 
 namespace TemplateTelegramBot;
 
@@ -25,17 +18,14 @@ public class Worker : IHostedService
         _appLifetime.ApplicationStopping.Register(OnStopping);
         return Task.CompletedTask;
     }
-
     private void OnStarted()
     {
         Console.WriteLine("Service is running.");
     }
-
     private void OnStopping()
     {
         Console.WriteLine("Service is stopping.");
     }
-
     public Task StopAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine("Service stopped.");
