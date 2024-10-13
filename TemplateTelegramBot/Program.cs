@@ -9,13 +9,13 @@ namespace TemplateTelegramBot
 {
     internal class Program
     {
-        private static IConfiguration configuration;
+        private static IConfiguration? configuration;
 
         private static HttpClient? _client;
 
         private static long adminID;
 
-        static string botToken;
+        static string? botToken;
 
         private static async Task Main(string[] args)
         {
@@ -31,7 +31,7 @@ namespace TemplateTelegramBot
             {
                 BaseAddress = new Uri($"https://api.telegram.org/bot{botToken}/")
             };
-            HostTelegram Hosttelegram = new HostTelegram(botToken, adminID);
+            HostTelegram Hosttelegram = new HostTelegram(botToken!, adminID);
             Hosttelegram.Start();
             Hosttelegram.OnMessage += OnMessage;
             await Host.CreateDefaultBuilder(args)
