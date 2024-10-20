@@ -17,6 +17,8 @@ namespace TemplateTelegramBot
 
         static string? botToken;
 
+        
+
         private static async Task Main(string[] args)
         {
             configuration = new ConfigurationBuilder()
@@ -52,8 +54,8 @@ namespace TemplateTelegramBot
                     {
                         switch (update.Message.Text)
                         {
-                            case var s when string.Equals(s, "", StringComparison.OrdinalIgnoreCase):
-                               
+                            case var s when string.Equals(s, "/start", StringComparison.OrdinalIgnoreCase):
+
                                 break;
 
                             default:
@@ -84,7 +86,11 @@ namespace TemplateTelegramBot
                     break;
 
                 case UpdateType.ChosenInlineResult:
-                                
+
+                    break;
+
+                case UpdateType.PreCheckoutQuery:
+
                     break;
 
                 default:
