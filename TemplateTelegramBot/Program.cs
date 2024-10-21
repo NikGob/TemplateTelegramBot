@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot.Types.Enums;
 using Microsoft.Extensions.Configuration;
+using TemplateTelegramBot.Commands;
 
 namespace TemplateTelegramBot
 {
@@ -42,6 +43,8 @@ namespace TemplateTelegramBot
                          services.AddHostedService<Worker>();
                      })
                      .RunConsoleAsync();
+
+            
         }
         static async void OnMessage(ITelegramBotClient client, Update update)
         {
@@ -50,19 +53,10 @@ namespace TemplateTelegramBot
             switch (update.Type)
             {
                 case UpdateType.Message:
-                    if (update.Message?.Text != null)
-                    {
-                        switch (update.Message.Text)
-                        {
-                            case var s when string.Equals(s, "/start", StringComparison.OrdinalIgnoreCase):
 
-                                break;
+                    UpdateTypeMessageCommand updateTypeMessage = new UpdateTypeMessageCommand(client, update);
+                    updateTypeMessage.Execute();
 
-                            default:
-                               
-                                break;
-                        }
-                    }
                     break;
 
                 case UpdateType.EditedMessage:
