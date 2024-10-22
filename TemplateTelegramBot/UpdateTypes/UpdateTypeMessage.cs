@@ -29,7 +29,10 @@ namespace TemplateTelegramBot.Commands
                         break;
 
                     case { Photo: { Length: > 0 } }:
-                        
+
+                        var captionText = _update.Message.Caption is not null ? $" с текстом: [{_update.Message.Caption}]" : string.Empty;
+                        await _client.SendTextMessageAsync(_update.Message.Chat.Id, $"Получено фото{captionText}");
+
                         break;
 
                     case { Video: not null }:
