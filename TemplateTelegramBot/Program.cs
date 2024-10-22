@@ -48,14 +48,13 @@ namespace TemplateTelegramBot
         }
         static async void OnMessage(ITelegramBotClient client, Update update)
         {
-            
 
             switch (update.Type)
             {
                 case UpdateType.Message:
 
                     UpdateTypeMessageCommand updateTypeMessage = new UpdateTypeMessageCommand(client, update);
-                    updateTypeMessage.Execute();
+                    await updateTypeMessage.Execute();
 
                     break;
 
