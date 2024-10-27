@@ -6,7 +6,7 @@ using Telegram.Bot.Types.Enums;
 using Microsoft.Extensions.Configuration;
 using TemplateTelegramBot.Commands;
 
-namespace TemplateTelegramBot
+namespace TemplateTelegramBot.Bootstrap
 {
     internal class Program
     {
@@ -16,19 +16,19 @@ namespace TemplateTelegramBot
 
         private static long adminID;
 
-        static string? botToken;
+        private static string? botToken;
 
-        
+        private static string? discordWebhookURL;
 
         private static async Task Main(string[] args)
         {
             configuration = new ConfigurationBuilder()
-
-                .AddJsonFile("appsettings.json", optional: true)
-                .Build();
+             .AddJsonFile("Bootstrap/appsettings.json", optional: true)
+             .Build();
 
             botToken = configuration.GetValue<string>("BotToken");
             adminID = configuration.GetValue<long>("AdminID");
+            discordWebhookURL = configuration.GetValue<string>("discordWebhookURL");
 
             _client = new HttpClient
             {
@@ -44,7 +44,7 @@ namespace TemplateTelegramBot
                      })
                      .RunConsoleAsync();
 
-            
+
         }
         static async void OnMessage(ITelegramBotClient client, Update update)
         {
@@ -53,29 +53,32 @@ namespace TemplateTelegramBot
             {
                 case UpdateType.Message:
 
-                    UpdateTypeMessageCommand updateTypeMessage = new UpdateTypeMessageCommand(client, update);
-                    await updateTypeMessage.Execute();
+                    var messageUpdateHandler = new UpdateTypeMessage(client, update, adminID, discordWebhookURL!);
+                    await messageUpdateHandler.Execute();
 
                     break;
 
                 case UpdateType.EditedMessage:
-                 
+
                     break;
 
                 case UpdateType.ChannelPost:
-                    
+
+                    var channelPostHandler = new UpdateTypeChannelPost(client, update, adminID, discordWebhookURL!);
+                    await channelPostHandler.Execute();
+
                     break;
 
                 case UpdateType.EditedChannelPost:
-                    
+
                     break;
 
                 case UpdateType.CallbackQuery:
-                   
+
                     break;
 
                 case UpdateType.InlineQuery:
-                   
+
                     break;
 
                 case UpdateType.ChosenInlineResult:
@@ -87,7 +90,7 @@ namespace TemplateTelegramBot
                     break;
 
                 default:
-                  
+
                     break;
             }
         }
